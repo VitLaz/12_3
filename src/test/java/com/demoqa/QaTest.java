@@ -8,13 +8,14 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class QaTest {
 
     @BeforeAll
-    static void setUP() {
+    static void setUp() {
         Configuration.holdBrowserOpen = true;
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
@@ -41,7 +42,7 @@ public class QaTest {
         $("#firstName").setValue(firstName);
         $("#lastName").setValue(lastName);
         $("#userEmail").setValue(email);
-        $(byText(gender)).click();
+        $("#genterWrapper").$(byText(gender)).click();
         $("#userNumber").setValue(teleNumber);
 
         $("#dateOfBirthInput").click();
@@ -49,8 +50,8 @@ public class QaTest {
         $(".react-datepicker__year-select").selectOption("1987");
         $(byText("1")).click();
         $("#subjectsInput").setValue(subject).pressEnter();
-        $(byText(hobbies)).click();
-        $("#uploadPicture").uploadFile(new File("lightning_PNG52.png"));
+        $("#hobbiesWrapper").$(byText(hobbies)).click();
+        $("#uploadPicture").uploadFromClasspath("lightning_PNG52.png");
         $("#currentAddress").setValue(currentAddress);
         $("#state").click();
         $(byText(state)).click();
@@ -72,7 +73,7 @@ public class QaTest {
                 text(city));
 
         $("#closeLargeModal").click();
-
+        $(".modal-content").shouldNot(visible);
     }
 
 }
